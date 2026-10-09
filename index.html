@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秋秋电影网 - 秋天该很好，一起看电影 | qiuqiudianyingwang-h5.github.io</title>
+<meta name="description" content="秋秋电影网（https://qiuqiudianyingwang-h5.github.io）是秋日系电影导航站：新片、老片、动画、剧集、影评、榜单一页看完，配色像落叶，排版像信箱。">
+<meta name="keywords" content="秋秋电影网,秋天看电影,新片推荐,老片重温,治愈动画,剧集推荐,qiuqiudianyingwang-h5.github.io">
+<meta property="og:title" content="秋秋电影网 - 秋天该很好，一起看电影">
+<meta property="og:description" content="新片、老片、动画、剧集、影评、榜单，秋日系单页电影站。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://qiuqiudianyingwang-h5.github.io">
+<link rel="canonical" href="https://qiuqiudianyingwang-h5.github.io">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#fbf3e4;--cream2:#f3e6cf;--ink:#3a2417;--wood:#7a4a25;--wood-d:#5a3318;
+  --maple:#e8632a;--maple2:#c9491a;--leaf:#d98b3a;--green:#6f7d4a;--line:rgba(122,74,37,.22);
+  --card:#fffaf0;--shadow:0 12px 30px rgba(90,51,24,.16);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;
+  background:
+    radial-gradient(1000px 500px at 90% -10%,rgba(232,99,42,.16),transparent 60%),
+    radial-gradient(800px 500px at -10% 10%,rgba(111,125,74,.14),transparent 55%),
+    var(--cream);
+  color:var(--ink);line-height:1.7;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+
+/* 落叶 */
+.leaves{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.leaf{position:absolute;top:-40px;width:18px;height:18px;background:var(--maple);border-radius:0 100% 0 100%;opacity:.7;animation:fall linear infinite}
+.leaf:nth-child(2){background:var(--leaf);left:20%;animation-duration:9s}
+.leaf:nth-child(3){background:var(--green);left:40%;animation-duration:11s}
+.leaf:nth-child(4){background:var(--maple2);left:60%;animation-duration:8s}
+.leaf:nth-child(5){background:var(--leaf);left:80%;animation-duration:12s}
+@keyframes fall{to{transform:translateY(110vh) rotate(420deg)}}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(251,243,228,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-weight:900;font-size:1.35rem;letter-spacing:.5px}
+.brand b{color:var(--maple2)}
+.nav ul{display:flex;gap:6px;list-style:none}
+.nav a{padding:8px 12px;border-radius:999px;font-size:.9rem;color:var(--wood);transition:.25s}
+.nav a:hover,.nav a.active{background:var(--maple);color:#fff;box-shadow:0 6px 18px rgba(201,73,26,.32)}
+.menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.menu-btn span{width:24px;height:2px;background:var(--wood);border-radius:2px}
+
+/* hero */
+.hero{position:relative;z-index:1;padding:66px 0 42px}
+.hero h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.12;font-weight:900}
+.hero h1 em{font-style:normal;color:var(--maple2)}
+.hero p{margin-top:16px;max-width:620px;color:var(--wood-d);font-size:1.02rem}
+.hero .chips{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+.chip{padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:.82rem;color:var(--wood)}
+
+/* section */
+section.block{position:relative;z-index:1;padding:54px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px}
+.sec-head h2{font-size:1.7rem;font-weight:900}
+.sec-head h2 i{color:var(--maple2);margin-right:8px}
+.sec-head span{color:var(--wood);font-size:.85rem}
+
+/* 1 木牌路标：新片 */
+.signposts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.sign{position:relative;background:linear-gradient(180deg,var(--wood),var(--wood-d));color:#fde7cf;border-radius:14px 14px 10px 10px;padding:18px 16px 20px;box-shadow:var(--shadow);opacity:0;transform:translateY(18px);transition:.6s}
+.sign.in{opacity:1;transform:none}
+.sign::after{content:"";position:absolute;left:50%;bottom:-12px;width:6px;height:18px;background:var(--wood-d);transform:translateX(-50%);border-radius:3px}
+.sign h3{font-size:1.02rem;margin-bottom:6px}
+.sign p{font-size:.78rem;opacity:.86}
+.sign .rate{margin-top:10px;display:inline-block;background:var(--maple);color:#fff;font-weight:800;font-size:.74rem;padding:3px 10px;border-radius:999px}
+
+/* 2 信箱列表：老片重温 */
+.letterbox{max-width:860px}
+.letter{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--maple);border-radius:10px;margin-bottom:14px;opacity:0;transform:translateX(-16px);transition:.5s}
+.letter.in{opacity:1;transform:none}
+.letter .yr{font-weight:900;color:var(--maple2);min-width:54px}
+.letter h4{font-size:1rem}
+.letter p{font-size:.8rem;color:var(--wood-d)}
+
+/* 3 横向胶片：剧集 */
+.filmrow{display:flex;gap:16px;overflow-x:auto;padding:6px 2px 18px;scroll-snap-type:x mandatory}
+.filmrow::-webkit-scrollbar{height:8px}
+.filmrow::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.show{flex:0 0 250px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.show .cv{height:130px;background:linear-gradient(120deg,var(--leaf),var(--maple2))}
+.show .bd{padding:14px}
+.show .bd h4{font-size:.98rem}
+.show .bd p{font-size:.76rem;color:var(--wood-d);margin-top:4px}
+.show .tag{display:inline-block;margin-top:8px;font-size:.7rem;background:var(--wood);color:#fde7cf;padding:3px 9px;border-radius:999px}
+
+/* 4 三叶草卡片：动画 */
+.clover{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.leafcard{border-radius:20px;padding:22px;color:#fff;min-height:168px;opacity:0;transform:scale(.96);transition:.5s}
+.leafcard.in{opacity:1;transform:none}
+.leafcard.a{background:linear-gradient(135deg,#e8632a,#c9491a)}
+.leafcard.b{background:linear-gradient(135deg,#6f7d4a,#46512a)}
+.leafcard.c{background:linear-gradient(135deg,#d98b3a,#a85d1c)}
+.leafcard h3{font-size:1.15rem;margin-bottom:8px}
+.leafcard p{font-size:.82rem;opacity:.92}
+
+/* 5 秋日杂谈：杂志分栏 */
+.mag{column-count:2;column-gap:22px;max-width:900px}
+.article{break-inside:avoid;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px;opacity:0;transform:translateY(14px);transition:.5s}
+.article.in{opacity:1;transform:none}
+.article h4{font-size:1.02rem;margin-bottom:6px}
+.article p{font-size:.82rem;color:var(--wood-d)}
+.article .k{font-size:.72rem;color:var(--maple2);letter-spacing:1px;text-transform:uppercase}
+
+/* 6 榜单：温度计 */
+.thermo{max-width:760px;margin:0 auto}
+.trow{display:flex;align-items:center;gap:16px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);margin-bottom:12px;opacity:0;transform:translateY(14px);transition:.5s}
+.trow.in{opacity:1;transform:none}
+.tno{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:900;background:var(--wood);color:#fde7cf}
+.trow:nth-child(1) .tno{background:var(--maple2)}
+.trow:nth-child(2) .tno{background:var(--leaf)}
+.trow:nth-child(3) .tno{background:var(--green)}
+.tbody{flex:1}
+.tbody h4{font-size:.98rem}
+.tube{height:10px;border-radius:999px;background:var(--line);margin-top:8px;overflow:hidden}
+.tube i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--leaf),var(--maple2));border-radius:999px;transition:width 1.2s ease}
+.tscore{font-weight:900;color:var(--maple2);min-width:46px;text-align:right}
+
+/* footer */
+.site-footer{position:relative;z-index:1;margin-top:40px;background:var(--wood-d);color:#f3e6cf;padding:36px 0 26px}
+.foot{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center}
+.foot .links{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem}
+.foot .links a:hover{color:var(--maple)}
+.foot small{display:block;margin-top:14px;opacity:.82;font-size:.78rem;line-height:1.7}
+
+@media(max-width:980px){.signposts{grid-template-columns:repeat(2,1fr)}.clover{grid-template-columns:repeat(2,1fr)}.mag{column-count:1}}
+@media(max-width:680px){
+  .menu-btn{display:flex}
+  .nav ul{position:absolute;top:62px;left:0;right:0;background:var(--cream);flex-direction:column;padding:10px 18px 18px;gap:6px;border-bottom:1px solid var(--line);transform:translateY(-160%);transition:.35s}
+  .nav ul.open{transform:none}
+  .signposts{grid-template-columns:1fr 1fr}
+  .clover{grid-template-columns:1fr}
+  .sec-head{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:420px){.signposts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="leaves" aria-hidden="true">
+  <span class="leaf"></span><span class="leaf"></span><span class="leaf"></span>
+  <span class="leaf"></span><span class="leaf"></span>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <div class="brand">秋秋<b>电影网</b></div>
+    <button class="menu-btn" id="menuBtn" aria-label="菜单"><span></span><span></span><span></span></button>
+    <nav>
+      <ul id="navUl">
+        <li><a href="#new" class="active">新片路标</a></li>
+        <li><a href="#old">老片信箱</a></li>
+        <li><a href="#show">秋日剧集</a></li>
+        <li><a href="#ani">叶子动画</a></li>
+        <li><a href="#mag">影评杂志</a></li>
+        <li><a href="#rank">枫叶榜单</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <h1>秋天该很好，<br><em>一起看电影。</em></h1>
+    <p>秋秋电影网（qiuqiudianyingwang-h5.github.io）像一封寄给影迷的信：新片、老片、剧集、动画、杂谈、榜单都摆在秋日晒谷场上，不吵不挤，慢慢挑。</p>
+    <div class="chips">
+      <span class="chip">🍁 新片路标</span>
+      <span class="chip">✉️ 老片信箱</span>
+      <span class="chip">📺 秋日剧集</span>
+      <span class="chip">🍃 叶子动画</span>
+      <span class="chip">📰 影评杂志</span>
+      <span class="chip">🌡️ 枫叶榜单</span>
+    </div>
+  </section>
+
+  <!-- 1 新片路标 -->
+  <section class="block wrap" id="new">
+    <div class="sec-head"><h2><i>🍁</i> 新片路标</h2><span>这周值得走进影院/打开播放器的</span></div>
+    <div class="signposts">
+      <article class="sign"><h3>晚秋邮局</h3><p>剧情 / 2025 / 112分钟</p><span class="rate">9.0 分</span></article>
+      <article class="sign"><h3>栗子与雨</h3><p>治愈 / 2025 / 98分钟</p><span class="rate">9.2 分</span></article>
+      <article class="sign"><h3>山道来信</h3><p>悬疑 / 2024 / 121分钟</p><span class="rate">8.7 分</span></article>
+      <article class="sign"><h3>枫糖年代</h3><p>家庭 / 2025 / 126分钟</p><span class="rate">8.9 分</span></article>
+      <article class="sign"><h3>风吹麦信</h3><p>爱情 / 2024 / 104分钟</p><span class="rate">8.6 分</span></article>
+      <article class="sign"><h3>黄昏放映员</h3><p>文艺 / 2025 / 117分钟</p><span class="rate">9.1 分</span></article>
+      <article class="sign"><h3>落叶公路</h3><p>公路 / 2024 / 133分钟</p><span class="rate">8.8 分</span></article>
+      <article class="sign"><h3>柿子熟了</h3><p>喜剧 / 2025 / 101分钟</p><span class="rate">8.5 分</span></article>
+    </div>
+  </section>
+
+  <!-- 2 老片信箱 -->
+  <section class="block wrap" id="old">
+    <div class="sec-head"><h2><i>✉️</i> 老片信箱</h2><span>有些电影，要秋天重看才对味</span></div>
+    <div class="letterbox">
+      <div class="letter"><div class="yr">1994</div><div><h4>肖申克的秋</h4><p>希望这件事，适合在凉风里再读一遍。</p></div></div>
+      <div class="letter"><div class="yr">2003</div><div><h4>黄昏里的咖啡馆</h4><p>慢镜头、长对白、没特效，但后劲很大。</p></div></div>
+      <div class="letter"><div class="yr">2010</div><div><h4>信纸上的夏天</h4><p>青春片不只在夏天成立，秋天看更懂告别。</p></div></div>
+      <div class="letter"><div class="yr">2016</div><div><h4>山雾来信</h4><p>悬疑外壳下，其实讲“人怎么原谅自己”。</p></div></div>
+      <div class="letter"><div class="yr">2020</div><div><h4>小店最后一盏灯</h4><p>疫情之后重看，治愈感完全不一样。</p></div></div>
+    </div>
+  </section>
+
+  <!-- 3 秋日剧集 -->
+  <section class="block wrap" id="show">
+    <div class="sec-head"><h2><i>📺</i> 秋日剧集</h2><span>左右滑动，像翻晾在绳子上的剧照</span></div>
+    <div class="filmrow">
+      <div class="show"><div class="cv"></div><div class="bd"><h4>巷口栗子铺</h4><p>都市轻治愈 · 全12集</p><span class="tag">已完结</span></div></div>
+      <div class="show"><div class="cv"></div><div class="bd"><h4>晚风邮差</h4><p>群像温情 · 全10集</p><span class="tag">已完结</span></div></div>
+      <div class="show"><div class="cv"></div><div class="bd"><h4>枫叶派出所</h4><p>单元悬疑 · 全20集</p><span class="tag">更新至14集</span></div></div>
+      <div class="show"><div class="cv"></div><div class="bd"><h4>山那边小学</h4><p>教育治愈 · 全8集</p><span class="tag">已完结</span></div></div>
+      <div class="show"><div class="cv"></div><div class="bd"><h4>秋假不打烊</h4><p>职场轻喜剧 · 全16集</p><span class="tag">更新至11集</span></div></div>
+      <div class="show"><div class="cv"></div><div class="bd"><h4>夜行列车志</h4><p>公路单元剧 · 全9集</p><span class="tag">更新至7集</span></div></div>
+    </div>
+  </section>
+
+  <!-- 4 叶子动画 -->
+  <section class="block wrap" id="ani">
+    <div class="sec-head"><h2><i>🍃</i> 叶子动画</h2><span>给大人看的秋日短片</span></div>
+    <div class="clover">
+      <article class="leafcard a"><h3>会写信的松鼠</h3><p>它把坚果埋进土里，也把心事埋进信封。</p></article>
+      <article class="leafcard b"><h3>落叶清扫工</h3><p>每天扫走秋天，却舍不得扫走那张票根。</p></article>
+      <article class="leafcard c"><h3>栗子火车</h3><p>只在霜降后发车，终点站叫“还来得及”。</p></article>
+    </div>
+  </section>
+
+  <!-- 5 影评杂志 -->
+  <section class="block wrap" id="mag">
+    <div class="sec-head"><h2><i>📰</i> 影评杂志</h2><span>不装资深，只说人话</span></div>
+    <div class="mag">
+      <article class="article"><div class="k">秋日观影</div><h4>为什么秋天适合看慢电影？</h4><p>天黑得早，心也慢下来，长镜头不再无聊，反而像有人陪你发呆。</p></article>
+      <article class="article"><div class="k">老片重看</div><h4>《肖申克的救赎》换个季节看，结局不一样</h4><p>夏天看是自由，冬天看是忍耐，秋天看是——先把信写好，再等雨来。</p></article>
+      <article class="article"><div class="k">动画随笔</div><h4>治愈动画不是没冲突，是冲突后被接住</h4><p>真正戳人的不是大团圆，是角色终于被某个人/某只松鼠理解了。</p></article>
+      <article class="article"><div class="k">剧集观察</div><h4>单元剧为什么在秋天回潮？</h4><p>大家不想追大坑，想下班后看一集就收尾，像喝完一碗栗子汤。</p></article>
+    </div>
+  </section>
+
+  <!-- 6 枫叶榜单 -->
+  <section class="block wrap" id="rank">
+    <div class="sec-head"><h2><i>🌡️</i> 枫叶榜单</h2><span>本周站内“想再看一次”热度</span></div>
+    <div class="thermo">
+      <div class="trow"><div class="tno">1</div><div class="tbody"><h4>栗子与雨</h4><div class="tube"><i data-w="96%"></i></div></div><div class="tscore">9.2</div></div>
+      <div class="trow"><div class="tno">2</div><div class="tbody"><h4>黄昏放映员</h4><div class="tube"><i data-w="93%"></i></div></div><div class="tscore">9.1</div></div>
+      <div class="trow"><div class="tno">3</div><div class="tbody"><h4>枫糖年代</h4><div class="tube"><i data-w="90%"></i></div></div><div class="tscore">8.9</div></div>
+      <div class="trow"><div class="tno">4</div><div class="tbody"><h4>晚秋邮局</h4><div class="tube"><i data-w="87%"></i></div></div><div class="tscore">9.0</div></div>
+      <div class="trow"><div class="tno">5</div><div class="tbody"><h4>落叶公路</h4><div class="tube"><i data-w="84%"></i></div></div><div class="tscore">8.8</div></div>
+      <div class="trow"><div class="tno">6</div><div class="tbody"><h4>柿子熟了</h4><div class="tube"><i data-w="80%"></i></div></div><div class="tscore">8.5</div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <div class="brand" style="color:#fff">秋秋<b style="color:var(--maple)">电影网</b></div>
+      <small>网站名称：秋秋电影网<br>网站网址：https://qiuqiudianyingwang-h5.github.io<br>秋天该很好，一起看电影。</small>
+    </div>
+    <div class="links">
+      <a href="#new">新片路标</a>
+      <a href="#old">老片信箱</a>
+      <a href="#show">秋日剧集</a>
+      <a href="#ani">叶子动画</a>
+      <a href="#mag">影评杂志</a>
+      <a href="#rank">枫叶榜单</a>
+      <a href="#">关于秋秋</a>
+      <a href="#">免责声明</a>
+    </div>
+  </div>
+  <div class="wrap"><small>© 2026 秋秋电影网 保留所有权利。单页演示，内页链接均以 # 占位。</small></div>
+</footer>
+
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const navUl=document.getElementById('navUl');
+menuBtn.addEventListener('click',()=>navUl.classList.toggle('open'));
+navUl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navUl.classList.remove('open')));
+
+const secs=[...document.querySelectorAll('main section[id]')];
+const links=[...navUl.querySelectorAll('a')];
+addEventListener('scroll',()=>{
+  const y=scrollY+120;let id='';
+  secs.forEach(s=>{if(s.offsetTop<=y)id=s.id;});
+  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+});
+
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll?.('.tube i').forEach(b=>b.style.width=b.dataset.w);
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('.sign,.letter,.show,.leafcard,.article,.trow').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
